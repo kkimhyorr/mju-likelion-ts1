@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import TodoList from './TodoList';
 
 interface Todo {
   id: number;
@@ -8,7 +9,7 @@ interface Todo {
 
 const Todos = () => {
   const [content, setContent] = useState<string>('');
-  const [todos, setTodos] = useState<Todo[]>();
+  const [todos, setTodos] = useState<Todo[]>([]);
 
   const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
@@ -16,6 +17,7 @@ const Todos = () => {
 
   const addTodos = (e: React.FormEvent<HTMLElement>) => {
     e.preventDefault();
+
     const newTodo: Todo = {
       id: (todos?.length ?? 0) + 1,
       content: content,
@@ -30,12 +32,7 @@ const Todos = () => {
   return (
     <>
       <div>TodoList</div>
-
-      {todos?.map((item) => (
-        <p key={item.id}>
-          {item.id} / {item.content}
-        </p>
-      ))}
+      <TodoList todos={todos} />
       <form>
         <input
           placeholder="할 일을 입력해주세요."
